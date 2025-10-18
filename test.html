@@ -1,1 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Carousel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0d1117;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .carousel {
+      position: relative;
+      width: 500px;
+      max-width: 90%;
+      overflow: hidden;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    }
+
+    .carousel img {
+      width: 100%;
+      display: none;
+      border-radius: 12px;
+    }
+
+    .carousel img.active {
+      display: block;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .buttons {
+      margin-top: 15px;
+    }
+
+    button {
+      background-color: #238636;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      margin: 0 10px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #2ea043;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 15px;
+      font-size: 14px;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>📸 My Image Carousel</h2>
+  <div class="carousel">
+    <img src="images/1.png" class="active" alt="Slide 1">
+    <img src="images/2.png" alt="Slide 2">
+    <img src="images/3.png" alt="Slide 3">
+    <img src="images/4.png" alt="Slide 4">
+    <img src="images/5.png" alt="Slide 5">
+    <img src="images/6.png" alt="Slide 6">
+    <img src="images/7.png" alt="Slide 7">
+    <img src="images/8.png" alt="Slide 8">
+    <img src="images/9.png" alt="Slide 9">
+    <img src="images/10.png" alt="Slide 10">
+  </div>
+
+  <div class="buttons">
+    <button id="prev">⬅ Previous</button>
+    <button id="next">Next ➡</button>
+  </div>
+
+  <footer>Made with ❤️ using HTML, CSS & JS</footer>
+
+  <script>
+    const images = document.querySelectorAll('.carousel img');
+    let index = 0;
+
+    document.getElementById('next').addEventListener('click', () => {
+      images[index].classList.remove('active');
+      index = (index + 1) % images.length;
+      images[index].classList.add('active');
+    });
+
+    document.getElementById('prev').addEventListener('click', () => {
+      images[index].classList.remove('active');
+      index = (index - 1 + images.length) % images.length;
+      images[index].classList.add('active');
+    });
+  </script>
+
+</body>
+</html>
 
