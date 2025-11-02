@@ -1,6 +1,7 @@
-<h1 align="center">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=30&pause=1000&color=00FFFF&center=true&vCenter=true&width=550&lines=🗂️+WELCOME+TO+MY+PROJECT+INDEX" alt="Typing SVG" />
-</h1>
+
+<p align="center">
+  <img src="https://capsule-render.vercel.app/api?type=waving&color=00ffff&height=100&section=header" />
+</p>
 
 <p align="center">
   <b>All my projects, documentation, and notes — organized in one place 🚀</b><br>
@@ -10,14 +11,14 @@
 ---
 
 ## ✨ About This Repo
-> This repository serves as a **central hub** for all my projects, notes, and DevOps learning resources.  
+> This repository serves as a **central hub** for all my projects, notes, and Documention learning resources.  
 > 🌐 Connect with me everywhere — [**Click Here**](https://github.com/nikiimisal/nikiimisal)
 
 ---
 
 <h2 align="center">🌐 My Portfolio Website</h2>
 <p align="center">
-  👉 <a href="https://github.com/nikiimisal/Networking"><b>Click here to view my portfolio</b></a>
+  👉 <a href="https://nikiimisal.github.io/Portfollio.in/"><b>Click here to view my portfolio</b></a>
 </p>
 
 ---
@@ -152,9 +153,6 @@
 
 ---
 
-## 🧠 About This Index  
-This repository serves as a **centralized access point** for all my GitHub projects, documentation, and LinkedIn/Medium posts.  
-A perfect place to explore my **DevOps, Cloud, and Web Development** journey.
 
 ---
 
