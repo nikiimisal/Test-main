@@ -29,13 +29,25 @@
 
 ### 🌐 Networking  
 - 🧩 **GitHub Repo:** [Networking](https://github.com/nikiimisal/Networking)  
-- 🔗 **LinkedIn Post:** [View Post](https://github.com/nikiimisal/Networking)
 
 ---
+
+### Linux  
+- 🧩 **GitHub Repo:** [Linux](https://github.com/nikiimisal/Linux)  
+
+---
+
+### IAM & AWS Command Line Interface( CLI ) 
+- 🧩 **GitHub Repo:** [repo](https://github.com/nikiimisal/S3-CLI-IAm)  
+- [IAM](https://github.com/nikiimisal/S3-CLI-IAm/blob/main/IAM.md)
+- [CLI](https://github.com/nikiimisal/S3-CLI-IAm/blob/main/AWS_CLI.md)
+---
+
 
 ### 💻 Basic HTML Codes  
 > *Deploying a Static Website on AWS EC2: A Simple Guide*  
 - 🧩 **GitHub Repo:** [HTML Profile Site](https://github.com/nikiimisal/html_basic_code_myprofile)
+- 🧩 **GitHub Repo:** [HTML Profile Site](https://github.com/nikiimisal/my_first_project_in_collage_BCS)
 
 ---
 
@@ -59,6 +71,19 @@
 
 ---
 
+### Python project hosting
+
+- 🧩 **GitHub Repo:** [repo](https://github.com/nikiimisal/Python_Project_Hosting)  
+
+---
+
+
+### NodeJS___NodeJS-using-Nginx___MEAN-and-MERN
+
+- 🧩 **GitHub Repo:** [repo](https://github.com/nikiimisal/NodeJS___NodeJS-using-Nginx___MEAN-and-MERN)  
+
+---
+
 ### 🏗️ 3-Tier Architecture (AWS Projects)
 - **Main Repository:** [3-Tier Architecture Related](https://github.com/nikiimisal/3-tier_Architecture_Related)
 
@@ -69,7 +94,9 @@
 - [NACL](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/NACL.md)
 - [Load Balancer](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/LOAD-BALANCER.md)
 - [EBS](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/EBS.md)
-- [CloudWatch & AutoScaling](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/CLOUD_WATCH%20%26%20AUTOscalling.md)
+- [EBS](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/EBS.md)
+- [S3](https://github.com/nikiimisal/S3-CLI-IAm/blob/main/S3.md) [S3-Clound-front](https://github.com/nikiimisal/S3-CLI-IAm/blob/main/S3_CloudFront.md) [S3-Static-Hosting](https://github.com/nikiimisal/S3-CLI-IAm/blob/main/S3_Static_Hosting.md) [S3-Storage-classes](https://github.com/nikiimisal/S3-CLI-IAm/blob/main/S3_Storage_Classes.md)
+- [Databases](https://github.com/nikiimisal/Databases)
 - [Full Architecture Overview](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/3-tier-Arc_all_servaces_include.md)
 
 <h3 align="center">
@@ -89,6 +116,44 @@
 
 - 🧩 **Serverless Application (Sacred Temple File Uploader):**  
   [View Repository](https://github.com/nikiimisal/project--Serverless-application--Sacred-Temple-File-Uploader--using-lambda)
+
+---
+
+### GIT-GitHub-Gitlab Setup & some more info
+
+- 🧩 **GitHub Repo:** [repo](https://github.com/nikiimisal/Git-Github-GitLab)  
+
+<h3 align="center">
+  ✨ <span style="color:#00ffff; text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff;">AWS 3-Tier Projects</span> ✨
+</h3>
+
+-  **Project:** [Project-GitMirrorSync-GitLab-GitHub-Repository-Mirroring](https://github.com/nikiimisal/Project-GitMirrorSync-GitLab-GitHub-Repository-Mirroring)  
+-  **Project note's:** [mirror-repo-github](https://github.com/nikiimisal/mirror-repo-github)
+-  **Project Practice:** [Git Branching and Merge Conflict Practice](https://github.com/nikiimisal/Git-Branching-and-Merge-Conflict-Practice)
+-  
+
+---
+
+### BitBucket
+
+- 🧩 **GitHub Repo:** [repo](https://github.com/nikiimisal/Bitbucket)  
+
+
+---
+
+### Jenkins
+
+- 🧩 **GitHub Repo:** [repo](https://github.com/nikiimisal/Jenkins)
+
+- <h3 align="center">
+  ✨ <span style="color:#00ffff; text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff;"> Jenkin Projects</span> ✨
+</h3>
+
+-  **Project:** [Jenkins Freestyle Project Flow (For Beginners)](https://github.com/nikiimisal/Jenkins-Freestyle-Project-Flow-For-Beginners-)
+-  **Project:** [Node.js App Deployment using Jenkins Freestyle Projects](https://github.com/nikiimisal/Jenkins-Freestyle-Deployment-Node-App)
+-   **Project material:** [material](https://github.com/nikiimisal/node-js-app-CICD)
+
+
 
 ---
 
