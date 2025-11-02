@@ -134,8 +134,8 @@
 </h3>
 
 - ⚙️ [Freestyle Project Flow (Beginner)](https://github.com/nikiimisal/Jenkins-Freestyle-Project-Flow-For-Beginners-)  
-- 🚀 [Node.js Deployment using Jenkins](https://github.com/nikiimisal/Jenkins-Freestyle-Deployment-Node-App)  
-- 📄 [Supporting Mate]()
+- 🚀 [Freestyle project-Node.js Deployment using Jenkins](https://github.com/nikiimisal/Jenkins-Freestyle-Deployment-Node-App)  
+- 📄 [Supporting Material](https://github.com/nikiimisal/node-js-app-CICD)
 
 
 ---
