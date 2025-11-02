@@ -12,7 +12,7 @@
 
 ## ✨ About This Repo
 > This repository serves as a **central hub** for all my projects, notes, and Documention learning resources.  
-> 🌐 Connect with me everywhere — [**Click Here**](https://github.com/nikiimisal/nikiimisal)
+> 🌐 Connect with me everywhere — [**Click Here**](https://github.com/nikiimisal)
 
 ---
 
@@ -23,22 +23,22 @@
 
 ---
 
-## 📚 Project Index
+<h2 align="center">INDEX</h2>
 
 ---
 
 ### 🌐 Networking  
-- 🧩 **GitHub Repo:** [Networking](https://github.com/nikiimisal/Networking)
+-  [Networking](https://github.com/nikiimisal/Networking)
 
 ---
 
 ### 🐧 Linux  
-- 🧩 **GitHub Repo:** [Linux](https://github.com/nikiimisal/Linux)
+-  [Linux](https://github.com/nikiimisal/Linux)
 
 ---
 
 ### 🔐 IAM & AWS CLI  
-- 🧩 **GitHub Repo:** [S3 + IAM + CLI](https://github.com/nikiimisal/S3-CLI-IAm)  
+- 🧩 **Repo:** [S3 + IAM + CLI](https://github.com/nikiimisal/S3-CLI-IAm)  
 - 📄 [IAM Notes](https://github.com/nikiimisal/S3-CLI-IAm/blob/main/IAM.md)  
 - 💻 [CLI Notes](https://github.com/nikiimisal/S3-CLI-IAm/blob/main/AWS_CLI.md)
 
@@ -53,20 +53,18 @@
 
 ### 🧱 WordPress  
 - 🧩 [WordPress Basic](https://github.com/nikiimisal/wordpress_basic)  
-- 🔗 [LinkedIn Post](https://github.com/nikiimisal/Networking)
 
 ---
 
 ### 📊 LEPM  
 - 🧩 [LEPM Project](https://github.com/nikiimisal/LAMP_ubuntu)  
-- 🔗 [LinkedIn Post](https://github.com/nikiimisal/Networking)
 
 <h3 align="center">
   💠 <span style="color:#00ffff; text-shadow: 0 0 6px #00ffff, 0 0 12px #00ffff, 0 0 24px #00ffff;">Highlighted Projects</span> 💠
 </h3>
 
-- ⚙️ [LEPM Setup](https://github.com/nikiimisal/LAMP_ubuntu)  
-- ☁️ [LEMP + AWS (S3, RDS, CloudFront)](https://github.com/nikiimisal/project-using-lapm-S3-CloudFront-RDS)
+- ⚙️**Project Setup:** [LEPM Setup](https://github.com/nikiimisal/LAMP_ubuntu)  
+- ☁️**Project:** [LEMP + AWS (S3, RDS, CloudFront)](https://github.com/nikiimisal/project-using-lapm-S3-CloudFront-RDS)
 
 ---
 
@@ -76,14 +74,14 @@
 ---
 
 ### 🟢 NodeJS / MEAN / MERN  
-- 🧩 [NodeJS & Nginx Projects](https://github.com/nikiimisal/NodeJS___NodeJS-using-Nginx___MEAN-and-MERN)
+- 🧩- **NodeJS___NodeJS-using-Nginx___MEAN-and-MERN:** [NodeJS & Nginx Projects](https://github.com/nikiimisal/NodeJS___NodeJS-using-Nginx___MEAN-and-MERN)
 
 ---
 
 ### 🏗️ 3-Tier Architecture (AWS Projects) 
 
-- **Main Repository:** [3-Tier Architecture Related](https://github.com/nikiimisal/3-tier_Architecture_Related)
--
+- **repo:** [3-Tier Architecture Related](https://github.com/nikiimisal/3-tier_Architecture_Related)
+
 -   #### ⚙️ Core Services:
 - [VPC](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/VPC.md)
 - [VPC Peering](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/VPC_peering.md)
@@ -91,10 +89,10 @@
 - [NACL](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/NACL.md)
 - [Load Balancer](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/LOAD-BALANCER.md)
 - [EBS](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/EBS.md)
-- [S3](https://github.com/nikiimisal/S3-CLI-IAm/blob/main/S3.md) [S3-Clound-front](https://github.com/nikiimisal/S3-CLI-IAm/blob/main/S3_CloudFront.md) [S3-Static-Hosting](https://github.com/nikiimisal/S3-CLI-IAm/blob/main/S3_Static_Hosting.md) [S3-Storage-classes](https://github.com/nikiimisal/S3-CLI-IAm/blob/main/S3_Storage_Classes.md)
+- [S3](https://github.com/nikiimisal/S3-CLI-IAm/blob/main/S3.md) || [S3-Clound-front](https://github.com/nikiimisal/S3-CLI-IAm/blob/main/S3_CloudFront.md) || [S3-Static-Hosting](https://github.com/nikiimisal/S3-CLI-IAm/blob/main/S3_Static_Hosting.md) || [S3-Storage-classes](https://github.com/nikiimisal/S3-CLI-IAm/blob/main/S3_Storage_Classes.md)
 - [Databases](https://github.com/nikiimisal/Databases)
 - [Full Architecture Overview](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/3-tier-Arc_all_servaces_include.md)
-- <h3 align="center"> ✨ <span style="color:#00ffff; text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff;">AWS 3-Tier Projects</span> ✨ </h3>
+ <h3 align="center"> ✨ <span style="color:#00ffff; text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff;">AWS 3-Tier Projects</span> ✨ </h3>
 
   - 🎯 **Attendance System:** [View Project](https://github.com/nikiimisal/Project-Mark-Your-Attendance-3-Tier-AWS-SDK-Architecture)
   - 🎬 **Movie Ticket Booking:** [View Project](https://github.com/nikiimisal/Project--Movie-Ticket-Booking-System-AWS-3-Tier-Architecture-)
@@ -111,7 +109,7 @@
 ---
 
 ### 🧰 Git / GitHub / GitLab Setup  
-- 🧩 [Main Repo](https://github.com/nikiimisal/Git-Github-GitLab)
+- 🧩 [ Repo](https://github.com/nikiimisal/Git-Github-GitLab)
 
 <h3 align="center">
   🌀 <span style="color:#00ffff; text-shadow: 0 0 5px #00ffff, 0 0 15px #00ffff, 0 0 25px #00ffff;">Git Projects</span> 🌀
