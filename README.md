@@ -1,31 +1,28 @@
 
 
 
-┌──────────────────────────── ENTRYPOINT vs CMD ────────────────────────────┐
-│ ENTRYPOINT                         │ CMD                                    │
-│ ───────────────────────────────────│────────────────────────────────────── │
-│ ▸ Defines MAIN command (executable)│ ▸ Defines default arguments/command    │
-│ ▸ Commands written in ENTRYPOINT    │ ▸ Arguments usually in CMD             │
-│ ▸ Cannot be easily overridden       │ ▸ Can be overridden with docker run    │
-│ ▸ Runs first and always on start    │ ▸ Runs after ENTRYPOINT (if exists)   │
-│ ▸ Only ONE ENTRYPOINT per Dockerfile│ ▸ Multiple CMD allowed, only LAST works│
-│ ▸ Optional                          │ ▸ IMPORTANT, without CMD container may stop │
-│ ▸ Gives fixed behavior              │ ▸ Gives flexible behavior              │
-│ Example: ENTRYPOINT ["nginx"]       │ Example: CMD ["-g", "daemon off;"]    │
-│ docker run myimage → nginx -g daemon off │ docker run myimage /bin/sh → CMD overridden │
-└────────────────────────────────────────────────────────────────────────────┘
+┌──────────────────── ENTRYPOINT vs CMD ────────────────┬──────────────────────────── COPY vs ADD ──────────────┐
+│ ENTRYPOINT                        │ CMD                 │ COPY                         │ ADD                     │
+│ ───────────────────────────────── │ ───────────────── │ ─────────────────────────── │ ────────────────────── │
+│ ▸ Defines the MAIN command        │ ▸ Default args or  │ ▸ Copy file from host to     │ ▸ Copy file from host  │
+│   (executable) of the container  │   command           │   container                  │   or internet to       │
+│                                   │                     │                              │   container            │
+│ ▸ Commands are written in ENTRYPOINT │ ▸ Args usually   │ ▸ Simpler, predictable       │ ▸ Can do more complex  │
+│   (WHAT to run)                   │   in CMD (HOW)     │                              │   tasks (unpack etc.) │
+│ ▸ Cannot be overridden easily    │ ▸ Can be overridden │ ▸ Does NOT unpack archives  │ ▸ Can unpack archives  │
+│                                   │   while running    │   automatically             │   automatically        │
+│ ▸ Runs first, always executes    │ ▸ Runs after       │ ▸ Cannot fetch files from    │ ▸ Can fetch remote     │
+│   when container starts           │   ENTRYPOINT       │   URLs                       │   files from internet  │
+│ ▸ Only ONE ENTRYPOINT should exist │ ▸ Multiple CMDs    │ ▸ Preferred for most cases  │ ▸ Use only for remote  │
+│                                   │   but last works   │                              │   or archive tasks     │
+│ ▸ Not compulsory                  │ ▸ CMD is important │ ▸ Simple syntax, faster      │ ▸ Slightly slower due  │
+│                                   │   (without CMD,    │   builds                     │   to extra features    │
+│                                   │    container stops)│                              │                        │
+│ Example:                          │ Example:           │ Example:                     │ Example:                │
+│ ENTRYPOINT ["nginx"]              │ CMD ["-g","daemon off;"] │ COPY ./app /usr/src/app    │ ADD app.tar.gz /usr/src/app │
+│ docker run myimage → nginx -g daemon off │ docker run myimage /bin/sh → CMD overridden │ ADD https://example.com/file.txt /usr/src/file.txt │
+└────────────────────────────────────┴───────────────────────────────┴───────────────────────────┴─────────────────────┘
 
-┌──────────────────────────── COPY vs ADD ─────────────────────────────┐
-│ COPY                               │ ADD                                │
-│ ───────────────────────────────────│────────────────────────────────── │
-│ ▸ Copy file from host to container │ ▸ Copy file from host OR internet │
-│ ▸ Simpler, more predictable        │ ▸ Can unpack archives automatically│
-│ ▸ Does NOT unpack archives         │ ▸ Can fetch remote files from URL │
-│ ▸ Cannot fetch from URLs           │ ▸ Use for archive extraction or remote download │
-│ ▸ Preferred for most use-cases     │ ▸ Slightly slower due to extra features │
-│ Example: COPY ./app /usr/src/app   │ Example: ADD app.tar.gz /usr/src/app │
-│                                   │ ADD https://example.com/file.txt /usr/src/file.txt │
-└─────────────────────────────────────────────────────────────────────┘
 
 
 
