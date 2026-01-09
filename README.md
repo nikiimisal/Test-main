@@ -1,3 +1,66 @@
+
+
+
+┌──────────────────────────── ENTRYPOINT vs CMD ────────────────────────────┐
+│ ENTRYPOINT                         │ CMD                                    │
+│ ───────────────────────────────────│────────────────────────────────────── │
+│ ▸ Defines MAIN command (executable)│ ▸ Defines default arguments/command    │
+│ ▸ Commands written in ENTRYPOINT    │ ▸ Arguments usually in CMD             │
+│ ▸ Cannot be easily overridden       │ ▸ Can be overridden with docker run    │
+│ ▸ Runs first and always on start    │ ▸ Runs after ENTRYPOINT (if exists)   │
+│ ▸ Only ONE ENTRYPOINT per Dockerfile│ ▸ Multiple CMD allowed, only LAST works│
+│ ▸ Optional                          │ ▸ IMPORTANT, without CMD container may stop │
+│ ▸ Gives fixed behavior              │ ▸ Gives flexible behavior              │
+│ Example: ENTRYPOINT ["nginx"]       │ Example: CMD ["-g", "daemon off;"]    │
+│ docker run myimage → nginx -g daemon off │ docker run myimage /bin/sh → CMD overridden │
+└────────────────────────────────────────────────────────────────────────────┘
+
+┌──────────────────────────── COPY vs ADD ─────────────────────────────┐
+│ COPY                               │ ADD                                │
+│ ───────────────────────────────────│────────────────────────────────── │
+│ ▸ Copy file from host to container │ ▸ Copy file from host OR internet │
+│ ▸ Simpler, more predictable        │ ▸ Can unpack archives automatically│
+│ ▸ Does NOT unpack archives         │ ▸ Can fetch remote files from URL │
+│ ▸ Cannot fetch from URLs           │ ▸ Use for archive extraction or remote download │
+│ ▸ Preferred for most use-cases     │ ▸ Slightly slower due to extra features │
+│ Example: COPY ./app /usr/src/app   │ Example: ADD app.tar.gz /usr/src/app │
+│                                   │ ADD https://example.com/file.txt /usr/src/file.txt │
+└─────────────────────────────────────────────────────────────────────┘
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <h1 align="center">🗂️ INDEX</h1>
 
 > This repository acts as a central hub for all my **projects**, **documentation**, and **notes**.  
