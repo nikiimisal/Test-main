@@ -1,27 +1,19 @@
 
 
 
-┌──────────────────── ENTRYPOINT vs CMD ────────────────┬──────────────────────────── COPY vs ADD ──────────────┐
-│ ENTRYPOINT                        │ CMD                 │ COPY                         │ ADD                     │
-│ ───────────────────────────────── │ ───────────────── │ ─────────────────────────── │ ────────────────────── │
-│ ▸ Defines the MAIN command        │ ▸ Default args or  │ ▸ Copy file from host to     │ ▸ Copy file from host  │
-│   (executable) of the container  │   command           │   container                  │   or internet to       │
-│                                   │                     │                              │   container            │
-│ ▸ Commands are written in ENTRYPOINT │ ▸ Args usually   │ ▸ Simpler, predictable       │ ▸ Can do more complex  │
-│   (WHAT to run)                   │   in CMD (HOW)     │                              │   tasks (unpack etc.) │
-│ ▸ Cannot be overridden easily    │ ▸ Can be overridden │ ▸ Does NOT unpack archives  │ ▸ Can unpack archives  │
-│                                   │   while running    │   automatically             │   automatically        │
-│ ▸ Runs first, always executes    │ ▸ Runs after       │ ▸ Cannot fetch files from    │ ▸ Can fetch remote     │
-│   when container starts           │   ENTRYPOINT       │   URLs                       │   files from internet  │
-│ ▸ Only ONE ENTRYPOINT should exist │ ▸ Multiple CMDs    │ ▸ Preferred for most cases  │ ▸ Use only for remote  │
-│                                   │   but last works   │                              │   or archive tasks     │
-│ ▸ Not compulsory                  │ ▸ CMD is important │ ▸ Simple syntax, faster      │ ▸ Slightly slower due  │
-│                                   │   (without CMD,    │   builds                     │   to extra features    │
-│                                   │    container stops)│                              │                        │
-│ Example:                          │ Example:           │ Example:                     │ Example:                │
-│ ENTRYPOINT ["nginx"]              │ CMD ["-g","daemon off;"] │ COPY ./app /usr/src/app    │ ADD app.tar.gz /usr/src/app │
-│ docker run myimage → nginx -g daemon off │ docker run myimage /bin/sh → CMD overridden │ ADD https://example.com/file.txt /usr/src/file.txt │
-└────────────────────────────────────┴───────────────────────────────┴───────────────────────────┴─────────────────────┘
+| ENTRYPOINT vs CMD |  | COPY vs ADD |  |
+|------------------|--|------------|--|
+| **ENTRYPOINT**   | **CMD** | **COPY** | **ADD** |
+| Defines the main command (executable) of the container | Default arguments or default command | Copy file from host to container | Copy file from host or internet to container |
+| Commands are written in ENTRYPOINT (WHAT to run) | Arguments usually written in CMD (HOW to run) | Simpler, more predictable | Can do more complex tasks (e.g., unpack archives) |
+| Cannot be overridden easily | CMD can be overridden while running the container | Does NOT unpack archives automatically | Can unpack local .tar, .tar.gz, .tar.xz automatically |
+| Runs first and always executes when container starts | Runs after ENTRYPOINT (if ENTRYPOINT exists) | Cannot fetch files from URLs | Can fetch remote files from internet |
+| Only ONE ENTRYPOINT should exist | Multiple CMD can exist but only the LAST CMD works | Preferred for most use-cases | Use only when you need archive extraction or remote download |
+| ENTRYPOINT is NOT compulsory (optional) | CMD is IMPORTANT (without CMD container may stop immediately) | Simpler syntax, faster build | Slightly slower due to extra features |
+| ENTRYPOINT gives fixed behavior | CMD gives flexible behavior | Example: `COPY ./app /usr/src/app` | Example: `ADD app.tar.gz /usr/src/app` |
+| Example: `ENTRYPOINT ["nginx"]` | Example: `CMD ["-g","daemon off;"]` | Example: `COPY ./index.html /usr/share/nginx/html/` | Example: `ADD https://example.com/file.txt /usr/src/file.txt` |
+| `docker run myimage` → nginx -g daemon off | `docker run myimage /bin/sh` → CMD overridden | - | - |
+
 
 
 
