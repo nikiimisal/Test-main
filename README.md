@@ -1,11 +1,13 @@
 
 
-<p style="font-size:16px; line-height:1.5;">
-💡 Only project highlights are shown below.  
-For more notes, examples, screenshots, and detailed setups, visit the <b>Index Section</b> — <a href="#index_section">Click here</a>.
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=nikiimisal&show_icons=true&theme=tokyonight&hide_border=true" height="160px" />
+  <img src="https://streak-stats.demolab.com?user=nikiimisal&theme=tokyonight&hide_border=true" height="160px" />
 </p>
 
-
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=nikiimisal&layout=compact&theme=tokyonight&hide_border=true" height="160px" />
+</p>
 
 
 
