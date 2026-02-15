@@ -1,4 +1,64 @@
 
+
+<table>
+  <tr>
+    <th width="10%">Domain</th>
+    <th width="20%">Description</th>
+    <th width="15%">Skills / Tools</th>
+    <th width="55%">Projects</th>
+  </tr>
+
+  <tr>
+    <td><b>Cloud</b></td>
+    <td>Build, deploy, scale & secure systems on AWS</td>
+    <td>AWS</td>
+    <td>
+      - <a href="https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/VPC.md">Securing VPC</a> <br>
+      - <a href="https://github.com/nikiimisal/Project--Movie-Ticket-Booking-System-AWS-3-Tier-Architecture-/blob/main/Movie%20Ticket%20Booking%20System%20%28AWS%203-Tier%20Architecture%29.md">Movie Ticket Booking System (AWS 3-Tier)</a> <br>
+      - <a href="https://github.com/nikiimisal/Project-Mark-Your-Attendance-3-Tier-AWS-SDK-Architecture/blob/main/README.md">Mark Your Attendance (AWS SDK 3-Tier)</a> <br>
+      - <a href="https://github.com/nikiimisal/project--Serverless-application--Sacred-Temple-File-Uploader--using-lambda">Serverless File Uploader (Lambda)</a>
+    </td>
+  </tr>
+
+  <tr>
+    <td><b>DevOps</b></td>
+    <td>Using DevOps tools to build practical understanding of how each tool works, implementing complete workflows from scratch</td>
+    <td>Docker, Kubernetes, Jenkins, Terraform, Ansible, Prometheus, Grafana</td>
+    <td>
+      - CI/CD Pipeline Setup <br>
+      - Docker Containerization <br>
+      - Kubernetes Deployment <br>
+      - Terraform (IaC) <br>
+      - Monitoring Setup
+    </td>
+  </tr>
+
+  <tr>
+    <td><b>SCM</b></td>
+    <td>Version control & repository management</td>
+    <td>GitHub, GitLab, CodeCommit</td>
+    <td>
+      - <a href="https://github.com/nikiimisal/Git-Github/tree/main">Git & GitHub Setup</a> <br>
+      - <a href="https://gitlab.com/nikiimisal">GitLab Profile</a> <br>
+      - AWS CodeCommit
+    </td>
+  </tr>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                                                                                                                                     
 | Domain     | Description                                                   | Skills / Tools                                                       | Projects                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
 | ---------- | ------------------------------------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
