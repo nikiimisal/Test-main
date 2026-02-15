@@ -1,15 +1,6 @@
 
-
 <p align="center">
-  <!-- GitHub stats -->
   <img src="https://github-readme-stats.vercel.app/api?username=nikiimisal&show_icons=true&theme=tokyonight&hide_border=true" height="160px" />
-
-  <!-- GitHub streak stats (alternate stable URL) -->
-  <img src="https://github-readme-streak-stats.herokuapp.com/?user=nikiimisal&theme=tokyonight&hide_border=true" height="160px" />
-</p>
-
-<p align="center">
-  <!-- Top languages -->
   <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=nikiimisal&layout=compact&theme=tokyonight&hide_border=true" height="160px" />
 </p>
 
