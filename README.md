@@ -278,121 +278,55 @@ docker stop <container_id>
 
 # 📄 Summary Report: Data Ingestion Pipeline (S3 → RDS → Glue Fallback)
 
-## 1. Python script and Dockerfile stored in a GitHub repository
+## 1. Repository
+Python script and Dockerfile are stored in GitHub:  
+[Click here](https://github.com/nikiimisal/Internship__Project__3__-Raw-material)
 
-[click here](https://github.com/nikiimisal/Internship__Project__3__-Raw-material)
+## 2. Data Flow
+Fault-tolerant pipeline: reads CSV from **S3**, inserts into **RDS MySQL**, falls back to **AWS Glue** if RDS fails.
 
-## 2. Working Docker image and container logs showing: 
+- **Normal Flow:** S3 → Python → RDS ✅  
+- **Failure Flow:** S3 → Python → ❌ RDS → AWS Glue ✅  
 
-o Successful push to RDS or fallback to Glue 
-
-## 3. Screenshot of: 
-o Records inserted into RDS or 
-o Table created in AWS Glue Catalog 
-
-## 4. 🔄 Data Flow
-
-This project implements a fault-tolerant data ingestion pipeline where data is read from Amazon S3 and inserted into an RDS MySQL database. If the RDS operation fails, the system automatically switches to AWS Glue as a fallback mechanism.
-
-### ✅ Normal Flow:
-S3 → Python Application → RDS MySQL
-
-- The Python script reads a CSV file from an S3 bucket
-- Data is parsed using pandas
-- Data is inserted into RDS using SQLAlchemy and PyMySQL
-
-### ❌ Failure Flow:
-S3 → Python Application → RDS (Failure) → AWS Glue
-
-- If RDS connection fails (wrong credentials / DB down / network issue)
-- Exception is handled in Python
-- AWS Glue is triggered using boto3
-- A table is created in Glue Data Catalog with the same schema
-
-👉 This ensures **no data loss and continuous processing**
+**Implementation:** pandas parses CSV, SQLAlchemy + PyMySQL inserts into RDS, boto3 triggers Glue fallback.
 
 ---
 
-## 5. ☁️ AWS Services Used
-
-### Amazon S3
-- Stores raw CSV data
-- Acts as the source of the pipeline
-
-### Amazon RDS (MySQL)
-- Primary database for structured data storage
-- Receives data from the Python application
-
-### AWS Glue
-- Used as a fallback mechanism
-- Creates tables in Data Catalog when RDS fails
-
-### IAM (Identity and Access Management)
-- Manages permissions and access
-- Provides secure access keys for programmatic usage
-
-### Amazon EC2
-- Hosts the Docker container
-- Runs the Python application in a cloud environment
+## 3. AWS Services Used
+- **S3:** Stores raw CSV files  
+- **RDS (MySQL):** Main database  
+- **Glue:** Fallback table creation  
+- **IAM:** Permissions & credentials  
+- **EC2:** Hosts Docker container
 
 ---
 
-## 6. 🐳 Docker Setup
+## 4. Docker Setup
+- **Base Image:** Python 3.9  
+- **Dependencies:** boto3, pandas, sqlalchemy, pymysql  
+- **Execution:** Script runs automatically on container start  
+- **Env Variables:** `.env` file contains AWS credentials, S3 & RDS info  
 
-Docker is used to package the application and ensure consistency across environments.
-
-### Key Components:
-- Base Image: Python 3.9
-- Dependencies installed:
-  - boto3
-  - pandas
-  - sqlalchemy
-  - pymysql
-
-### Working:
-- Application code is copied into the container
-- The container runs the Python script automatically on startup
-
-### Environment Variables:
-- Managed using `.env` file
-- Includes:
-  - AWS credentials
-  - S3 bucket details
-  - RDS connection configuration
-
-### Commands Used:
+**Commands:**
 ```
 docker build -t s3-rds-glue-app .
 docker run --env-file .env s3-rds-glue-app
 ```
-👉 Docker ensures portability and avoids dependency issues
 
 ---
 
-## 7. ⚠️ Challenges Faced & Solutions
-
-### 1. RDS Connection Failure
-- Issue: Incorrect password / DB not reachable
-- Solution: Implemented try-except block and fallback to AWS Glue
-
-### 2. Dependency Management Issues
-- Issue: Python libraries mismatch across environments
-- Solution: Used Docker and requirements.txt for consistent setup
-
-### 3. AWS Permission Errors
-- Issue: Access denied while accessing S3 or Glue
-- Solution: Configured IAM user with required permissions (S3, RDS, Glue)
-
-### 4. Testing Fallback Mechanism
-- Issue: Difficult to simulate failure
-- Solution: Intentionally changed RDS password in `.env` file to trigger fallback
+## 5. Challenges & Solutions
+| Challenge                     | Solution |
+|--------------------------------|---------|
+| RDS connection failure         | Fallback to Glue using try-except |
+| Dependency management          | Docker + requirements.txt ensures consistency |
+| AWS permissions                | IAM user with proper access (S3, RDS, Glue) |
+| Testing fallback               | Intentionally wrong RDS password to trigger Glue |
 
 ---
 
 ## ✅ Conclusion
-
-This project demonstrates a real-world, fault-tolerant data ingestion pipeline using AWS services and Docker.  
-It ensures that data is reliably processed even in failure scenarios by automatically switching to AWS Glue.
+This project implements a **scalable, fault-tolerant data pipeline** using **AWS services and Docker**, ensuring reliable data ingestion and automatic fallback handling.
 
 ---
 ---
