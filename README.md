@@ -1,184 +1,274 @@
+# 🚀 Project 3: Data Ingestion from S3 to RDS with Glue Fallback
 
-<p align="center">
-  <img src="https://github-readme-stats.vercel.app/api?username=nikiimisal&show_icons=true&theme=tokyonight&hide_border=true" height="160px" />
-  <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=nikiimisal&layout=compact&theme=tokyonight&hide_border=true" height="160px" />
-</p>
+## 📌 Objective
 
+Develop a Dockerized Python application that automates the process of:
 
+- Reading data from an Amazon S3 bucket  
+- Pushing it to an RDS (MySQL-compatible) database  
+- Automatically falling back to AWS Glue if the RDS database is unavailable or the push operation fails  
 
-
-
-
-
-
-
-
-
-
-                                                                                                                                                    
-| Domain     | Description                                                   | Skills / Tools                                                       | Projects                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| ---------- | ------------------------------------------------------------- | -------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Cloud**  | Using AWS services to build, deploy, scale & secure systems   | AWS                                                                  | - [Securing VPC](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/VPC.md) <br> - [Movie Ticket Booking System (AWS 3-Tier Architecture)](https://github.com/nikiimisal/Project--Movie-Ticket-Booking-System-AWS-3-Tier-Architecture-/blob/main/Movie%20Ticket%20Booking%20System%20%28AWS%203-Tier%20Architecture%29.md) <br> - [Mark Your Attendance (AWS SDK 3-Tier Architecture)](https://github.com/nikiimisal/Project-Mark-Your-Attendance-3-Tier-AWS-SDK-Architecture/blob/main/README.md) <br> - [Serverless Application – Sacred Temple File Uploader (Lambda)](https://github.com/nikiimisal/project--Serverless-application--Sacred-Temple-File-Uploader--using-lambda) |
-| **DevOps** | Implementing complete DevOps workflows & practical tool usage | Docker, Kubernetes, Jenkins, Terraform, Ansible, Prometheus, Grafana | - CI/CD Pipeline Setup <br> - Docker Containerization <br> - Kubernetes Deployments <br> - Terraform (IaC) <br> - Monitoring Setup                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-| **SCM**    | Version control & repository management                       | GitHub, GitLab, CodeCommit                                           | - [Git & GitHub Setup](https://github.com/nikiimisal/Git-Github/tree/main) <br> - [GitLab Profile](https://gitlab.com/nikiimisal) <br> - [AWS CodeCommit]()                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-
-                                                                                                                                                    
-                                                                                                                                                    
-                                                                                                                                                    
-                                                                                                                                                    
-                                                                                                                                                    
-                                                                                                                                                    
-                                                                                                                                                    
-                                                                                                                                                    
-                                                                                                                                                    
-                                                                                                                                                    |
-
-
-
-
-
-- [Pod](#example-0)     - [Pod](#example-0)   - [Pod](#example-0)
-
-
-
-
-
-| ENTRYPOINT vs CMD |  | COPY vs ADD |  |
-|------------------|--|------------|--|
-| **ENTRYPOINT**   | **CMD** | **COPY** | **ADD** |
-| Defines the main command (executable) of the container | Default arguments or default command | Copy file from host to container | Copy file from host or internet to container |
-| Commands are written in ENTRYPOINT (WHAT to run) | Arguments usually written in CMD (HOW to run) | Simpler, more predictable | Can do more complex tasks (e.g., unpack archives) |
-| Cannot be overridden easily | CMD can be overridden while running the container | Does NOT unpack archives automatically | Can unpack local .tar, .tar.gz, .tar.xz automatically |
-| Runs first and always executes when container starts | Runs after ENTRYPOINT (if ENTRYPOINT exists) | Cannot fetch files from URLs | Can fetch remote files from internet |
-| Only ONE ENTRYPOINT should exist | Multiple CMD can exist but only the LAST CMD works | Preferred for most use-cases | Use only when you need archive extraction or remote download |
-| ENTRYPOINT is NOT compulsory (optional) | CMD is IMPORTANT (without CMD container may stop immediately) | Simpler syntax, faster build | Slightly slower due to extra features |
-| ENTRYPOINT gives fixed behavior | CMD gives flexible behavior | Example: `COPY ./app /usr/src/app` | Example: `ADD app.tar.gz /usr/src/app` |
-| Example: `ENTRYPOINT ["nginx"]` | Example: `CMD ["-g","daemon off;"]` | Example: `COPY ./index.html /usr/share/nginx/html/` | Example: `ADD https://example.com/file.txt /usr/src/file.txt` |
-| `docker run myimage` → nginx -g daemon off | `docker run myimage /bin/sh` → CMD overridden | - | - |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<h1 align="center">🗂️ INDEX</h1>
-
-> This repository acts as a central hub for all my **projects**, **documentation**, and **notes**.  
-> You can explore everything in one place.  
-> To connect with all my social profiles — [**Click Here**](https://github.com/nikiimisal/nikiimisal)
+This project helps integrate multiple AWS services (S3, RDS, Glue), work with data pipelines, and use Docker for packaging and deployment.
 
 ---
 
-### 🌐 My Portfolio Website  
-- **👉** [View Portfolio Repository](https://github.com/nikiimisal/Networking)
+## 🏗️ Architecture
+
+```
+Normal Flow:
+S3 → Python → RDS ✅
+
+Failure Flow:
+S3 → Python → ❌ RDS → ✅ Glue
+```
+
+👉 This is a real-world fault-tolerant pipeline 🔥
 
 ---
 
-### 🌐 Networking  
-- **GitHub Repo:** [Networking](https://github.com/nikiimisal/Networking)  
-- **LinkedIn Post:** [View Post](https://github.com/nikiimisal/Networking)
+## 📁 Step 1: Prepare Project Files
+
+Create a folder and inside it create:
+
+```
+project-folder/
+│── data.csv    # Sample dataset
+│── app.py      # Python script (S3 → RDS → Glue fallback)
+│── Dockerfile
+│── requirements.txt
+│── .env
+```
+
+You can:
+- Create files directly in terminal  
+- OR clone a repo and edit  
+- OR create locally and upload to EC2  
+
+>I have created this files in directly in terminal
 
 ---
 
-### 💻 Basic HTML Codes  
-> *Deploying a Static Website on AWS EC2: A Simple Guide*  
-- **GitHub Repo:** [HTML Profile Site](https://github.com/nikiimisal/html_basic_code_myprofile)
+## 🔐 Step 2: IAM User (Permission System)
+
+Go to → ***AWS** → **IAM** → **Users** → **Create User**
+
+Configuration Fill:
+- Name: `project-user`
+- Enable: ✅ Programmatic access  
+
+Attach Permissions:
+- `AmazonS3FullAccess`  
+- `AmazonRDSFullAccess`  
+- `AWSGlueConsoleFullAccess`
+
+Go to Security Credentials → Access Keys → Create  
+
+Save:
+
+```
+AWS_ACCESS_KEY_ID=XXXX
+AWS_SECRET_ACCESS_KEY=XXXX
+```
+
+👉 These will be used inside Docker
 
 ---
 
-### 🧱 WordPress  
-- **GitHub Repo:** [WordPress Basic](https://github.com/nikiimisal/wordpress_basic)  
-- **LinkedIn Post:** [View Post](https://github.com/nikiimisal/Networking)
+## ☁️ Step 3: Set up Amazon S3
+
+1. Open AWS Console → S3  
+2. Create bucket (e.g., `my-data-bucket-277`)  
+3. Upload `data.csv`  
+4. Note the bucket name and object key (`data.csv`) for environment variables.
+  
+---
+
+## 🗄️ Step 4: Set up Amazon RDS (MySQL)
+
+Go to AWS Console → RDS → Create database
+
+Select:
+- Engine: MySQL  
+- Version: 8.0  
+- Free tier  
+
+Configure:
+- DB Identifier: `my-rds`  
+- Database Name: `mydb`  
+- Username: `admin`  
+- Password: `password123`  
+- Public access: Enabled  
+
+Note the endpoint:
+```
+my-rds.xxxxx.region.rds.amazonaws.com
+```
 
 ---
 
-### 📊 LEPM  
-- **GitHub Repo:** [LEPM Project](https://github.com/nikiimisal/LAMP_ubuntu)  
-- **LinkedIn Post:** [View Post](https://github.com/nikiimisal/Networking)
+## 🧾 Step 4a: Create Table in RDS
 
-<h3 align="center">
-  ✨ <span style="color:#00ffff; text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff;">Project</span> ✨
-</h3>
+```SQL
+CREATE DATABASE mydb;
 
-- **LEPM Project:** [LEPM Setup on Ubuntu](https://github.com/nikiimisal/LAMP_ubuntu)  
-- **Advanced Project:** [LEMP with S3, CloudFront & RDS](https://github.com/nikiimisal/project-using-lapm-S3-CloudFront-RDS)
+USE mydb;
 
----
-
-### 🏗️ 3-Tier Architecture (All AWS Services)
-
-- **Main Repo:** [3-Tier Architecture Related](https://github.com/nikiimisal/3-tier_Architecture_Related)
-
-#### 📘 Service-wise Docs
-- [VPC](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/VPC.md)  
-- [VPC Peering](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/VPC_peering.md)  
-- [RDS](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/RDS.md)  
-- [NACL](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/NACL.md)  
-- [Load Balancer (LB)](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/LOAD-BALANCER.md)  
-- [Elastic Block Store (EBS)](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/EBS.md)  
-- [CloudWatch & Auto Scaling](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/CLOUD_WATCH%20%26%20AUTOscalling.md)  
-- [All Services Overview](https://github.com/nikiimisal/3-tier_Architecture_Related/blob/main/3-tier-Arc_all_servaces_include.md)
-
-<h3 align="center">
-  ✨ <span style="color:#00ffff; text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff;">Project</span> ✨
-</h3>
-
-- **Attendance System (3-Tier AWS SDK):** [View Project](https://github.com/nikiimisal/Project-Mark-Your-Attendance-3-Tier-AWS-SDK-Architecture)  
-- **Movie Ticket Booking (3-Tier AWS):** [View Project](https://github.com/nikiimisal/Project--Movie-Ticket-Booking-System-AWS-3-Tier-Architecture-)
+CREATE TABLE mytable (
+id INT PRIMARY KEY,
+name VARCHAR(100),
+age INT,
+city VARCHAR(100)
+);
+```
+>For this, we’ll need to launch a server instance — we can do that later.
 
 ---
 
-### ☁️ Serverless Hosting  
+## 🧠 Step 5: Set up AWS Glue (Fallback)
 
-<h3 align="center">
-  ✨ <span style="color:#00ffff; text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff;">Project</span> ✨
-</h3>
+Go to AWS Glue → Data Catalog
 
-- **Serverless Application (Sacred Temple File Uploader):**  
-  [View Repository](https://github.com/nikiimisal/project--Serverless-application--Sacred-Temple-File-Uploader--using-lambda)
+- Create database: `fallback_db`  
+- Do NOT create tables manually  
 
----
-
-## 🧩 Upcoming Additions
-> I’ll continue updating this index as I build and publish more projects.
+👉 Python script will create tables automatically if RDS fails.
 
 ---
 
-## 🧠 About This Index
-This repository is a **central access point** for all my GitHub projects, LinkedIn posts, and technical documentation.  
-A single place to explore my **DevOps, Cloud, and Web** work.
+## 💻 Step 6: Launch EC2 Instance
+
+Go to EC2 → Launch Instance
+
+- Amazon Linux 2 / 2023  
+- Instance type: `t2.micro `
+
+Enable:
+- SSH (port 22)  
+
+Download `.pem` key
+
+Connect:
+```Bash
+ssh -i "your-key.pem" ec2-user@your-ec2-ip
+```
 
 ---
 
-<h3 align="center">⭐ If you found this helpful, consider giving it a star!</h3>
+## 🐳 Step 7: Install Docker
+
+```Bash
+sudo yum update -y
+sudo yum install docker -y
+sudo systemctl start docker
+sudo systemctl enable docker
+sudo usermod -aG docker ec2-user
+```
+
+Reconnect SSH so the user is added to the Docker group.
+
+---
+
+## 🏗️ Step 8: Build Docker Image
+
+```Bash
+docker build -t s3-rds-glue-app .
+```
+This creates a Docker image with your Python script and dependencies.
+
+---
+
+## ▶️ Step 9: Run Docker Container
+
+```Bash
+docker run --env-file .env s3-rds-glue-app
+```
+
+---
+
+## ⚙️ Expected Behavior
+
+- Reads CSV from S3  
+- Uploads to RDS  
+
+### If RDS works:
+- Data inserted successfully  
+
+### If RDS fails:
+- Error occurs  
+- Glue fallback triggered  
+- Table created in Glue  
+
+---
+
+## 🔍 Step 10: Verification
+
+### Check RDS:
+
+```Bash
+SELECT * FROM mytable;
+```
+
+### Check Glue:
+
+- Go to Glue → Tables → `my_glue_table`  
+- Columns match CSV  
+
+### Optional (Athena):
+
+```SQL
+SELECT * FROM my_glue_table;
+```
+
+---
+
+## 📜 Step 11: Docker Logs
+
+```Bash
+docker ps                      # find running container
+docker logs <container_id>
+```
+Logs will show:
+
+- RDS success OR
+- Glue fallback triggered
+
+---
+
+## 🧪 Step 12: Test Glue Fallback (Optional)
+
+Edit `.env`:
+
+```
+RDS_PASS=wrongpassword
+```
+
+Run again:
+
+```Bash
+docker run --env-file .env s3-rds-glue-app
+```
+
+Output:
+
+```
+📤 Uploading data to RDS...
+❌ RDS upload failed
+⚠️ Falling back to Glue...
+✅ Glue table created successfully
+```
+Verify Glue table:
+
+Go to Glue → Tables → my_glue_table
+
+Columns reflect CSV headers: id, name, age, city
+
+✅ This step confirms the fallback mechanism works.
+---
+
+## 🧹 Step 13: Cleanup
+
+```
+docker stop <container_id>
+```
+
+---
