@@ -39,12 +39,20 @@ project-folder/
 │── .env
 ```
 
+
+
 You can:
 - Create files directly in terminal  
 - OR clone a repo and edit  
 - OR create locally and upload to EC2  
 
 >I have created this files in directly in terminal
+
+
+<p align="center">
+  <img src="" width="700" alt="Initialize Repository Screenshot">
+</p>
+
 
 ---
 
@@ -72,6 +80,13 @@ AWS_SECRET_ACCESS_KEY=XXXX
 
 👉 These will be used inside Docker
 
+
+| **IAM-Role**    | **Access keys**          |
+|--------------------------------|------------------------------------|
+| ![VS]() | ![AWS]() |
+
+
+
 ---
 
 ## ☁️ Step 3: Set up Amazon S3
@@ -80,6 +95,14 @@ AWS_SECRET_ACCESS_KEY=XXXX
 2. Create bucket (e.g., `my-data-bucket-277`)  
 3. Upload `data.csv`  
 4. Note the bucket name and object key (`data.csv`) for environment variables.
+
+
+
+| **Bucket**    | **Object**          |
+|--------------------------------|------------------------------------|
+| ![VS]() | ![AWS]() |
+
+
   
 ---
 
@@ -103,6 +126,12 @@ Note the endpoint:
 ```
 my-rds.xxxxx.region.rds.amazonaws.com
 ```
+
+<p align="center">
+  <img src="" width="700" alt="Initialize Repository Screenshot">
+</p>
+
+
 
 ---
 
@@ -133,6 +162,13 @@ Go to AWS Glue → Data Catalog
 
 👉 Python script will create tables automatically if RDS fails.
 
+
+
+<p align="center">
+  <img src="" width="700" alt="Initialize Repository Screenshot">
+</p>
+
+
 ---
 
 ## 💻 Step 6: Launch EC2 Instance
@@ -151,6 +187,12 @@ Connect:
 ```Bash
 ssh -i "your-key.pem" ec2-user@your-ec2-ip
 ```
+
+
+<p align="center">
+  <img src="" width="700" alt="Initialize Repository Screenshot">
+</p>
+
 
 ---
 
@@ -191,12 +233,21 @@ docker run --env-file .env s3-rds-glue-app
 - Uploads to RDS  
 
 ### If RDS works:
-- Data inserted successfully  
+- Data inserted successfully
+- To see inserted data for that see step 10
+
+
+<p align="center">
+  <img src="" width="700" alt="Initialize Repository Screenshot">
+</p>
+
+---
 
 ### If RDS fails:
 - Error occurs  
 - Glue fallback triggered  
-- Table created in Glue  
+- Table created in Glue
+- For that see  step 11
 
 ---
 
@@ -207,6 +258,16 @@ docker run --env-file .env s3-rds-glue-app
 ```Bash
 SELECT * FROM mytable;
 ```
+
+
+---
+
+
+<p align="center">
+  <img src="" width="700" alt="Initialize Repository Screenshot">
+</p>
+
+---
 
 ### Check Glue:
 
@@ -219,22 +280,10 @@ SELECT * FROM mytable;
 SELECT * FROM my_glue_table;
 ```
 
----
-
-## 📜 Step 11: Docker Logs
-
-```Bash
-docker ps                      # find running container
-docker logs <container_id>
-```
-Logs will show:
-
-- RDS success OR
-- Glue fallback triggered
 
 ---
 
-## 🧪 Step 12: Test Glue Fallback (Optional)
+## 🧪 Step 11: Test Glue Fallback (Optional)
 
 Edit `.env`:
 
@@ -256,6 +305,18 @@ Output:
 ⚠️ Falling back to Glue...
 ✅ Glue table created successfully
 ```
+
+
+
+---
+
+
+<p align="center">
+  <img src="" width="700" alt="Initialize Repository Screenshot">
+</p>
+
+
+---
 Verify Glue table:
 
 Go to Glue → Tables → my_glue_table
@@ -264,6 +325,29 @@ Columns reflect CSV headers: id, name, age, city
 
 ✅ This step confirms the fallback mechanism works.
 ---
+
+---
+
+<p align="center">
+  <img src="" width="700" alt="Initialize Repository Screenshot">
+</p>
+
+---
+
+## 📜 Step 12: Docker Logs
+
+```Bash
+docker ps                      # find running container
+docker logs <container_id>
+```
+Logs will show:
+
+- RDS success OR
+- Glue fallback triggered
+
+---
+
+
 
 ## 🧹 Step 13: Cleanup
 
