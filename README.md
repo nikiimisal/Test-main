@@ -39,7 +39,7 @@ project-folder/
 │── .env
 ```
 
-
+[click to see file's](https://github.com/nikiimisal/Internship__Project__3__-Raw-material/tree/main) to see file's.
 
 You can:
 - Create files directly in terminal  
