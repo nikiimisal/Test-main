@@ -1,19 +1,36 @@
-#  
+#  Deploy Prometheus and Grafana on Kubernetes Cluster using 
+Terraform & Helm 
 
 
 
 ## 📌 PROJECT OVERVIEW
 
-THIS PROJECT SETS UP A COMPLETE MONITORING STACK USING:
+This project deploys a complete monitoring stack using Prometheus and Grafana on an AWS EC2 Ubuntu instance with Kubernetes. Deployment is automated using Terraform and Helm, making it reproducible and easy to manage.
 
-- KUBERNETES (KUBEADM)
-- CONTAINERD
-- HELM
-- TERRAFORM
-- PROMETHEUS 📊
-- GRAFANA 📈
+## 🔹 OBJECTIVES
 
-# PROJECT STRUCTURE
+- ☸️ **Set up Kubernetes with containerd on EC2**
+- 📊 **Deploy Prometheus** for metrics collection
+- 📈 **Deploy Grafana** for dashboards
+- ⚡ **Automate deployments** with Terraform + Helm
+- 🌐 **Access dashboards via browser:**
+  - Prometheus → `http://<EC2-Public-IP>:9090`
+  - Grafana → `http://<EC2-Public-IP>:3000`
+
+##  🔹 Architecture
+
+```
+EC2 (Ubuntu)
+   └── containerd
+        └── Kubernetes Cluster
+             ├── Prometheus (Monitoring & Metrics)
+             └── Grafana (Dashboard & Visualization)
+```
+
+
+
+    
+## PROJECT STRUCTURE
 
 Create a folder `monitoring-project`:
 
