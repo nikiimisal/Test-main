@@ -44,9 +44,9 @@ monitoring-project/
 ```
 
 
+---
 
-
-##🔹 STEP 0: PREREQUISITES
+## 🔹 STEP 0: PREREQUISITES
 
 Make sure your environment has:
 
