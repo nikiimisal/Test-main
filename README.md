@@ -1,416 +1,145 @@
-# 🚀 Project 3: Data Ingestion from S3 to RDS with Glue Fallback
+🚀 FINAL DEPLOYMENT (Ubuntu + kubeadm + Terraform + Helm)
+🟢 STEP 1: Launch EC2 Instance
 
-## 📌 Objective
-
-Develop a Dockerized Python application that automates the process of:
-
-- Reading data from an Amazon S3 bucket  
-- Pushing it to an RDS (MySQL-compatible) database  
-- Automatically falling back to AWS Glue if the RDS database is unavailable or the push operation fails  
-
-This project helps integrate multiple AWS services (S3, RDS, Glue), work with data pipelines, and use Docker for packaging and deployment.
-
----
-
-## 🏗️ Architecture
-
-```
-Normal Flow:
-S3 → Python → RDS ✅
-
-Failure Flow:
-S3 → Python → ❌ RDS → ✅ Glue
-```
-
-👉 This is a real-world fault-tolerant pipeline 🔥
-
----
-
-## 📁 Step 1: Prepare Project Files
-
-Create a folder and inside it create:
-
-```
-project-folder/
-│── data.csv    # Sample dataset
-│── app.py      # Python script (S3 → RDS → Glue fallback)
-│── Dockerfile
-│── requirements.txt
-│── .env
-```
-
-[click to see file's](https://github.com/nikiimisal/Internship__Project__3__-Raw-material/tree/main) 
-
-You can:
-- Create files directly in terminal  
-- OR clone a repo and edit  
-- OR create locally and upload to EC2  
-
->I have created this files in directly in terminal
-
-
-<p align="center">
-  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20221106.png?raw=true" width="700" alt="Initialize Repository Screenshot">
-</p>
-
-
----
-
-## 🔐 Step 2: IAM User (Permission System)
-
-Go to → ***AWS** → **IAM** → **Users** → **Create User**
-
-Configuration Fill:
-- Name: `project-user`
-- Enable: ✅ Programmatic access  
-
-Attach Permissions:
-- `AmazonS3FullAccess`  
-- `AmazonRDSFullAccess`  
-- `AWSGlueConsoleFullAccess`
-
-Go to Security Credentials → Access Keys → Create  
-
-Save:
-
-```
-AWS_ACCESS_KEY_ID=XXXX
-AWS_SECRET_ACCESS_KEY=XXXX
-```
-
-👉 These will be used inside Docker
-
-
-| **IAM-Role**    | **Access keys**          |
-|--------------------------------|------------------------------------|
-| ![VS](https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20222054.png?raw=true) | ![AWS](https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20221928.png?raw=true) |
-
-
-
----
-
-## ☁️ Step 3: Set up Amazon S3
-
-1. Open AWS Console → S3  
-2. Create bucket (e.g., `my-data-bucket-277`)  
-3. Upload `data.csv`  
-4. Note the bucket name and object key (`data.csv`) for environment variables.
-
-
-
-| **Bucket**    | **Object**          |
-|--------------------------------|------------------------------------|
-| ![VS](https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-21%20175357.png?raw=true) | ![AWS](https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-21%20175405.png?raw=true) |
-
-
-  
----
-
-## 🗄️ Step 4: Set up Amazon RDS (MySQL)
-
-Go to AWS Console → RDS → Create database
-
-Select:
-- Engine: MySQL  
-- Version: 8.0  
-- Free tier  
+👉 Go to: Amazon Web Services
 
 Configure:
-- DB Identifier: `my-rds`  
-- Database Name: `mydb`  
-- Username: `admin`  
-- Password: `password123`  
-- Public access: Enabled  
+Name: monitoring-server
+AMI: Ubuntu 22.04 ✅
+Instance: t3.small (min) / t3.medium (better)
+Key pair: .pem
+🔥 Security Group
 
-Note the endpoint:
-```
-my-rds.xxxxx.region.rds.amazonaws.com
-```
+Allow:
 
-<p align="center">
-  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20222309.png?raw=true" width="700" alt="Initialize Repository Screenshot">
-</p>
+22 → SSH
+3000 → Grafana
+9090 → Prometheus
+6443 → Kubernetes
+🟢 STEP 2: Connect to EC2
+ssh -i your-key.pem ubuntu@<EC2-PUBLIC-IP>
+🟢 STEP 3: Create Setup Script
+nano k8s-common.sh
+👉 Paste THIS (Final Working Script 🔥)
+#!/bin/bash
+set -e
 
+echo "===== Kubernetes Setup Started ====="
+
+# Disable swap
+sudo swapoff -a
+sudo sed -i '/ swap / s/^/#/' /etc/fstab
+
+# Load kernel modules
+cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
+overlay
+br_netfilter
+EOF
 
+sudo modprobe overlay
+sudo modprobe br_netfilter
 
----
+# Sysctl settings
+cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-iptables=1
+net.bridge.bridge-nf-call-ip6tables=1
+net.ipv4.ip_forward=1
+EOF
 
-## 🧾 Step 4a: Create Table in RDS
+sudo sysctl --system
 
-```SQL
-CREATE DATABASE mydb;
+# Install containerd
+sudo apt update
+sudo apt install -y containerd
 
-USE mydb;
+sudo mkdir -p /etc/containerd
+containerd config default | sudo tee /etc/containerd/config.toml
+sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
 
-CREATE TABLE mytable (
-id INT PRIMARY KEY,
-name VARCHAR(100),
-age INT,
-city VARCHAR(100)
-);
-```
->For this, we’ll need to launch a server instance — we can do that later.
+sudo systemctl restart containerd
+sudo systemctl enable containerd
 
----
+echo "Containerd Installed"
 
-## 🧠 Step 5: Set up AWS Glue (Fallback)
+# Install Kubernetes tools
+sudo apt-get update -y
+sudo apt-get install -y apt-transport-https ca-certificates curl gpg
 
-Go to AWS Glue → Data Catalog
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
-- Create database: `fallback_db`  
-- Do NOT create tables manually  
+echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
-👉 Python script will create tables automatically if RDS fails.
+sudo apt-get update -y
+sudo apt-get install -y kubelet kubeadm kubectl
+sudo apt-mark hold kubelet kubeadm kubectl
 
+echo "Kubernetes Installed"
+🟢 STEP 4: Run Script
+chmod +x k8s-common.sh
+./k8s-common.sh
+🟢 STEP 5: Initialize Kubernetes
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 
+👉 ⚠️ End ला command येईल → ignore for now
 
-<p align="center">
-  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20115306.png?raw=true" width="700" alt="Initialize Repository Screenshot">
-</p>
+🟢 STEP 6: Configure kubectl
+mkdir -p $HOME/.kube
+sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown ubuntu:ubuntu $HOME/.kube/config
+🟢 STEP 7: Install Network Plugin
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
+🟢 STEP 8: Allow Pods on Master
+kubectl taint nodes --all node-role.kubernetes.io/control-plane-
+🟢 STEP 9: Verify Cluster
+kubectl get nodes
 
+👉 STATUS = Ready ✔
 
----
+🟢 STEP 10: Install Helm
 
-## 💻 Step 6: Launch EC2 Instance
+👉 Helm
 
-Go to EC2 → Launch Instance
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+🟢 STEP 11: Install Terraform
 
-- Amazon Linux 2 / 2023  
-- Instance type: `t2.micro `
+👉 Terraform
 
-Enable:
-- SSH (port 22)  
+sudo apt install -y gnupg software-properties-common
 
-Download `.pem` key
+wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp.gpg
 
-Connect:
-```Bash
-ssh -i "your-key.pem" ec2-user@your-ec2-ip
-```
+echo "deb [signed-by=/usr/share/keyrings/hashicorp.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
 
+sudo apt update && sudo apt install terraform -y
+🟢 STEP 12: Create Project Folder
+mkdir monitoring-project
+cd monitoring-project
+🟢 STEP 13: Create Terraform Files
+touch provider.tf namespace.tf prometheus.tf grafana.tf variables.tf outputs.tf
 
-<p align="center">
-  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20221543.png?raw=true" width="500" alt="Initialize Repository Screenshot">
-</p>
+👉 (तुझं prepared code paste कर ✔)
 
+🟢 STEP 14: Run Terraform
+terraform init
+terraform apply --auto-approve
+🟢 STEP 15: Verify Pods
+kubectl get pods -n monitoring
+🟢 STEP 16: Access Prometheus
+kubectl port-forward svc/prometheus-server 9090:80 -n monitoring --address 0.0.0.0
 
----
+👉 Open:
 
-## 🐳 Step 7: Install Docker
+http://<EC2-PUBLIC-IP>:9090
+🟢 STEP 17: Access Grafana
+kubectl port-forward svc/grafana 3000:80 -n monitoring --address 0.0.0.0
 
-```Bash
-sudo yum update -y
-sudo yum install docker -y
-sudo systemctl start docker
-sudo systemctl enable docker
-sudo usermod -aG docker ec2-user
-```
+👉 Open:
 
-Reconnect SSH so the user is added to the Docker group.
+http://<EC2-PUBLIC-IP>:3000
+🟢 STEP 18: Get Password
+kubectl get secret --namespace monitoring grafana \
+-o jsonpath="{.data.admin-password}" | base64 --decode
+🧠 FINAL FLOW
 
----
-
-## 🏗️ Step 8: Build Docker Image
-
-```Bash
-docker build -t s3-rds-glue-app .
-```
-This creates a Docker image with your Python script and dependencies.
-
----
-
-## ▶️ Step 9: Run Docker Container
-
-```Bash
-docker run --env-file .env s3-rds-glue-app
-```
-
----
-
-## ⚙️ Expected Behavior
-
-- Reads CSV from S3  
-- Uploads to RDS  
-
-### If RDS works:
-- Data inserted successfully
-- To see inserted data for that see step 10
-
-
-<p align="center">
-  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20132428.png?raw=true" width="700" alt="Initialize Repository Screenshot">
-</p>
-
----
-
-### If RDS fails:
-- Error occurs  
-- Glue fallback triggered  
-- Table created in Glue
-- For that see  step 11
-
----
-
-## 🔍 Step 10: Verification
-
-### Check RDS:
-
-```Bash
-SELECT * FROM mytable;
-```
-
-
----
-
-
-<p align="center">
-  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20132504.png?raw=true" width="700" alt="Initialize Repository Screenshot">
-</p>
-
----
-
-### Check Glue:
-
-- Go to Glue → Tables → `my_glue_table`  
-- Columns match CSV  
-
-### Optional (Athena):
-
-```SQL
-SELECT * FROM my_glue_table;
-```
-
-
----
-
-## 🧪 Step 11: Test Glue Fallback (Optional)
-
-Edit `.env`:
-
-```
-RDS_PASS=wrongpassword
-```
-
-Run again:
-
-```Bash
-docker run --env-file .env s3-rds-glue-app
-```
-
-Output:
-
-```
-📤 Uploading data to RDS...
-❌ RDS upload failed
-⚠️ Falling back to Glue...
-✅ Glue table created successfully
-```
-
-
-
----
-
-
-<p align="center">
-  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20132531.png?raw=true" width="700" alt="Initialize Repository Screenshot">
-</p>
-
-
----
-Verify Glue table:
-
-Go to Glue → Tables → my_glue_table
-
-Columns reflect CSV headers: id, name, age, city
-
-✅ This step confirms the fallback mechanism works.
-
-
----
-
-<p align="center">
-  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20121556.png?raw=true" width="700" alt="Initialize Repository Screenshot">
-</p>
-
----
-
-## 📜 Step 12: Docker Logs
-
-```Bash
-docker ps                      # find running container
-docker logs <container_id>
-```
-Logs will show:
-
-- RDS success OR
-- Glue fallback triggered
-
----
-
-
-
-## 🧹 Step 13: Cleanup
-
-```
-docker stop <container_id>
-```
-
----
-
-
-
-
-# 📄 Summary Report: Data Ingestion Pipeline (S3 → RDS → Glue Fallback)
-
-## 1. Repository
-Python script and Dockerfile are stored in GitHub:  
-[Click here](https://github.com/nikiimisal/Internship__Project__3__-Raw-material)
-
-## 2. Data Flow
-Fault-tolerant pipeline: reads CSV from **S3**, inserts into **RDS MySQL**, falls back to **AWS Glue** if RDS fails.
-
-- **Normal Flow:** S3 → Python → RDS ✅  
-- **Failure Flow:** S3 → Python → ❌ RDS → AWS Glue ✅  
-
-**Implementation:** pandas parses CSV, SQLAlchemy + PyMySQL inserts into RDS, boto3 triggers Glue fallback.
-
----
-
-## 3. AWS Services Used
-- **S3:** Stores raw CSV files  
-- **RDS (MySQL):** Main database  
-- **Glue:** Fallback table creation  
-- **IAM:** Permissions & credentials  
-- **EC2:** Hosts Docker container
-
----
-
-## 4. Docker Setup
-- **Base Image:** Python 3.9  
-- **Dependencies:** boto3, pandas, sqlalchemy, pymysql  
-- **Execution:** Script runs automatically on container start  
-- **Env Variables:** `.env` file contains AWS credentials, S3 & RDS info  
-
-**Commands:**
-```
-docker build -t s3-rds-glue-app .
-docker run --env-file .env s3-rds-glue-app
-```
-
----
-
-## 5. Challenges & Solutions
-| Challenge                     | Solution |
-|--------------------------------|---------|
-| RDS connection failure         | Fallback to Glue using try-except |
-| Dependency management          | Docker + requirements.txt ensures consistency |
-| AWS permissions                | IAM user with proper access (S3, RDS, Glue) |
-| Testing fallback               | Intentionally wrong RDS password to trigger Glue |
-
----
-
-## ✅ Conclusion
-This project implements a **scalable, fault-tolerant data pipeline** using **AWS services and Docker**, ensuring reliable data ingestion and automatic fallback handling.
-
----
----
+👉 EC2 (Ubuntu) → containerd → kubeadm → Kubernetes → Helm → Terraform → Prometheus → Grafana
