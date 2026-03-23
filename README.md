@@ -17,6 +17,8 @@ This project deploys a complete monitoring stack using Prometheus and Grafana on
 - 🌐 **Access dashboards via browser:**
   - Prometheus → `http://<EC2-Public-IP>:9090`
   - Grafana → `http://<EC2-Public-IP>:3000`
+    
+    <br>
  
   >I used this way for problem-solving or say project deployment, but you can use other methods if you prefer.
 
