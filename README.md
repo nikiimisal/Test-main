@@ -50,7 +50,7 @@ You can:
 
 
 <p align="center">
-  <img src="" width="700" alt="Initialize Repository Screenshot">
+  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20221106.png?raw=true" width="700" alt="Initialize Repository Screenshot">
 </p>
 
 
@@ -83,7 +83,7 @@ AWS_SECRET_ACCESS_KEY=XXXX
 
 | **IAM-Role**    | **Access keys**          |
 |--------------------------------|------------------------------------|
-| ![VS]() | ![AWS]() |
+| ![VS](https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20222054.png?raw=true) | ![AWS](https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20221928.png?raw=true) |
 
 
 
@@ -100,7 +100,7 @@ AWS_SECRET_ACCESS_KEY=XXXX
 
 | **Bucket**    | **Object**          |
 |--------------------------------|------------------------------------|
-| ![VS]() | ![AWS]() |
+| ![VS](https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-21%20175357.png?raw=true) | ![AWS](https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-21%20175405.png?raw=true) |
 
 
   
@@ -128,7 +128,7 @@ my-rds.xxxxx.region.rds.amazonaws.com
 ```
 
 <p align="center">
-  <img src="" width="700" alt="Initialize Repository Screenshot">
+  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20222309.png?raw=true" width="700" alt="Initialize Repository Screenshot">
 </p>
 
 
@@ -165,7 +165,7 @@ Go to AWS Glue → Data Catalog
 
 
 <p align="center">
-  <img src="" width="700" alt="Initialize Repository Screenshot">
+  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20115306.png?raw=true" width="700" alt="Initialize Repository Screenshot">
 </p>
 
 
@@ -190,7 +190,7 @@ ssh -i "your-key.pem" ec2-user@your-ec2-ip
 
 
 <p align="center">
-  <img src="" width="700" alt="Initialize Repository Screenshot">
+  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20221543.png?raw=true" width="500" alt="Initialize Repository Screenshot">
 </p>
 
 
@@ -238,7 +238,7 @@ docker run --env-file .env s3-rds-glue-app
 
 
 <p align="center">
-  <img src="" width="700" alt="Initialize Repository Screenshot">
+  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20132428.png?raw=true" width="700" alt="Initialize Repository Screenshot">
 </p>
 
 ---
@@ -264,7 +264,7 @@ SELECT * FROM mytable;
 
 
 <p align="center">
-  <img src="" width="700" alt="Initialize Repository Screenshot">
+  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20132504.png?raw=true" width="700" alt="Initialize Repository Screenshot">
 </p>
 
 ---
@@ -312,7 +312,7 @@ Output:
 
 
 <p align="center">
-  <img src="" width="700" alt="Initialize Repository Screenshot">
+  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20132531.png?raw=true" width="700" alt="Initialize Repository Screenshot">
 </p>
 
 
@@ -324,12 +324,12 @@ Go to Glue → Tables → my_glue_table
 Columns reflect CSV headers: id, name, age, city
 
 ✅ This step confirms the fallback mechanism works.
----
+
 
 ---
 
 <p align="center">
-  <img src="" width="700" alt="Initialize Repository Screenshot">
+  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-3/Screenshot%202026-03-22%20121556.png?raw=true" width="700" alt="Initialize Repository Screenshot">
 </p>
 
 ---
