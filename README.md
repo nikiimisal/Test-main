@@ -96,11 +96,8 @@ Create a script file for Kubernetes setup:
 ```
 sudo nano k8s-common.sh
 ```
-- IF you using
-
-For ubuntu : [click here](https://github.com/nikiimisal/Internship__Project-4__Raw-material/blob/main/k8s-common.sh)
-For Amazon : [click here](https://github.com/nikiimisal/Internship__Project-4__Raw-material/blob/main/k8s-common.sh%20%20(1))
-
+- IF you using ubuntu : [click here](https://github.com/nikiimisal/Internship__Project-4__Raw-material/blob/main/k8s-common.sh)
+- Or For Amazon : [click here](https://github.com/nikiimisal/Internship__Project-4__Raw-material/blob/main/k8s-common.sh%20%20(1))
 
 
 >We are using Ubuntu, so commands are Ubuntu-specific. For Amazon Linux, some commands may differ.
