@@ -1,5 +1,4 @@
-#  Deploy Prometheus and Grafana on Kubernetes Cluster using 
-Terraform & Helm 
+# Project 4: Deploy Prometheus and Grafana on Kubernetes Cluster using Terraform & Helm 
 
 
 
