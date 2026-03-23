@@ -1,10 +1,12 @@
 # Project 4: Deploy Prometheus and Grafana on Kubernetes Cluster using Terraform & Helm 
 
-
+---
 
 ## 📌 PROJECT OVERVIEW
 
 This project deploys a complete monitoring stack using Prometheus and Grafana on an AWS EC2 Ubuntu instance with Kubernetes. Deployment is automated using Terraform and Helm, making it reproducible and easy to manage.
+
+---
 
 ## 🔹 OBJECTIVES
 
@@ -16,6 +18,8 @@ This project deploys a complete monitoring stack using Prometheus and Grafana on
   - Prometheus → `http://<EC2-Public-IP>:9090`
   - Grafana → `http://<EC2-Public-IP>:3000`
 
+---
+
 ##  🔹 Architecture
 
 ```
@@ -26,7 +30,7 @@ EC2 (Ubuntu)
              └── Grafana (Dashboard & Visualization)
 ```
 
-
+---
 
     
 ## PROJECT STRUCTURE
@@ -51,8 +55,8 @@ monitoring-project/
 Make sure your environment has:
 
 - Terraform installed → `terraform -v` ⚡
-- kubectl installed & configured → `kubectl get nodes` ☸️
-- Helm installed → `helm version` ⛵
+- kubectl installed & configured → `kubectl get nodes` 
+- Helm installed → `helm version` 
 - A Kubernetes cluster ready (your EC2 node as a single-node cluster is fine)
 - Enough RAM (at least 4GB) for Prometheus 📊 + Grafana 📈
 
@@ -78,6 +82,7 @@ AWS → EC2 → Launch
 
 > In this project, we are not launching separate servers for the master and worker nodes. Both the control plane (master) and worker components run on the same server.
 
+---
 
 ## 🔹 STEP 2: Connect to EC2
 
@@ -87,7 +92,7 @@ Use SSH to connect to your instance:
 ssh -i your-key.pem ubuntu@<EC2-Public-IP>
 ```
 
-
+---
 
 ##  🔹 STEP 3: Create Kubernetes Setup Script
 
@@ -103,6 +108,7 @@ sudo nano k8s-common.sh
 >We are using Ubuntu, so commands are Ubuntu-specific. For Amazon Linux, some commands may differ.
 >Make sure the OS supports a command before running it.
 
+---
 
 ##  🔹 STEP 4: Run Setup Script
 
@@ -111,11 +117,15 @@ sudo chmod +x k8s-common.sh
 sudo ./k8s-common.sh
 ```
 
+---
+
 ##  🔹 STEP 5: Initialize Kubernetes
 
 ```
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 ```
+
+---
 
 ##  🔹 STEP 6: Configure kubectl
 
@@ -125,6 +135,8 @@ sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown ubuntu:ubuntu $HOME/.kube/config
 ```
 
+---
+
 
 ## 🔹 STEP 7: Install Network Plugin (Flannel)
 
@@ -132,11 +144,15 @@ sudo chown ubuntu:ubuntu $HOME/.kube/config
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 ```
 
+---
+
 ##  🔹 STEP 8: Allow Pods on Master
 
 ```Bash
 kubectl taint nodes --all node-role.kubernetes.io/control-plane-
 ```
+
+---
 
 ##  🔹 STEP 9: Verify Cluster
 
@@ -145,13 +161,15 @@ kubectl get nodes
 ```
 STATUS should be: Ready ✔
 
-
+---
 
 ##  🔹 STEP 10: Install Helm
 
 ```
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 ```
+
+---
 
 ##  🔹 STEP 11: Install Terraform
 
@@ -163,12 +181,16 @@ sudo apt update
 sudo apt install terraform -y
 ```
 
+---
+
 ##  🔹 STEP 12: Create Project Folder
 
 ```
 mkdir monitoring-project
 cd monitoring-project
 ```
+
+---
 
 ##  🔹 STEP 13: Create Terraform Files
 
@@ -179,7 +201,7 @@ Paste your prepared Terraform + Helm code into these files.
 
 >To see files [click here](https://github.com/nikiimisal/Internship__Project-4__Raw-material)
 
-
+---
 
 ##  🔹 STEP 14: Run Terraform
 
@@ -195,12 +217,15 @@ terraform apply --auto-approve
   - Prometheus
   - Grafana
 
+---
 
 ##   🔹 STEP 15: Verify Pods
 
 ```Bash
 kubectl get pods -n monitoring
 ```
+
+---
 
 ##  🔹 STEP 16: Access Prometheus
 
@@ -219,7 +244,7 @@ Open browser:
 http://<EC2-Public-IP>:9090
 ```
 
-
+---
 
 ##  🔹 STEP 17: Access Grafana
 
@@ -237,6 +262,7 @@ Open browser:
 http://<EC2-Public-IP>:3000
 ```
 
+---
 
 ##  🔹 STEP 18: Get Grafana Password
 
@@ -247,6 +273,8 @@ kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-pass
 Username: `admin`
 Password: output of the above command
 
+---
+
 
 ##  ✅ FINAL FLOW
 
@@ -254,14 +282,46 @@ Password: output of the above command
 EC2 → containerd → kubeadm → Kubernetes → Helm → Terraform → Prometheus → Grafana
 ```
 
+---
+---
+
+## 📝 SHORT REPORT
+
+### Infrastructure Components Used
+- **EC2:** Ubuntu 22.04 LTS
+- **Kubernetes Cluster:** kubeadm
+- **Container Runtime:** containerd
+- **Deployment Automation:** Helm & Terraform
+- **Monitoring Stack:** Prometheus 📊 + Grafana 📈
+
+---
 
 
+- **Steps to deploy and connect the monitoring stack:**
+  
+1. Launch EC2 instance and configure Security Group
+2. Connect via SSH
+3. Run the Kubernetes setup script (`k8s-common.sh`)
+4. Initialize Kubernetes cluster (`kubeadm init`)
+5. Configure kubectl
+6. Install network plugin (Flannel) and allow pods on master
+7. Install Helm and Terraform
+8. Create project folder and Terraform files
+9. Deploy Prometheus and Grafana via Terraform
+10. Access Prometheus (`http://<EC2-Public-IP>:9090`) and Grafana (`http://<EC2-Public-IP>:3000`)
+
+---
+
+- **Benefits of using Terraform and Helm together:**
+  
+  - Automates deployment of Kubernetes resources
+  - Ensures **repeatable, consistent environments**
+  - Simplifies management of Helm charts with **version control**
+  - Reduces manual errors during updates or redeployments
 
 
-
-
-
-
+---
+---
 
 
 
