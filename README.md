@@ -1,145 +1,270 @@
-🚀 FINAL DEPLOYMENT (Ubuntu + kubeadm + Terraform + Helm)
-🟢 STEP 1: Launch EC2 Instance
+#  
 
-👉 Go to: Amazon Web Services
 
-Configure:
-Name: monitoring-server
-AMI: Ubuntu 22.04 ✅
-Instance: t3.small (min) / t3.medium (better)
-Key pair: .pem
-🔥 Security Group
 
-Allow:
+## 📌 PROJECT OVERVIEW
 
-22 → SSH
-3000 → Grafana
-9090 → Prometheus
-6443 → Kubernetes
-🟢 STEP 2: Connect to EC2
-ssh -i your-key.pem ubuntu@<EC2-PUBLIC-IP>
-🟢 STEP 3: Create Setup Script
-nano k8s-common.sh
-👉 Paste THIS (Final Working Script 🔥)
-#!/bin/bash
-set -e
+THIS PROJECT SETS UP A COMPLETE MONITORING STACK USING:
 
-echo "===== Kubernetes Setup Started ====="
+- KUBERNETES (KUBEADM)
+- CONTAINERD
+- HELM
+- TERRAFORM
+- PROMETHEUS 📊
+- GRAFANA 📈
 
-# Disable swap
-sudo swapoff -a
-sudo sed -i '/ swap / s/^/#/' /etc/fstab
+# PROJECT STRUCTURE
 
-# Load kernel modules
-cat <<EOF | sudo tee /etc/modules-load.d/k8s.conf
-overlay
-br_netfilter
-EOF
+Create a folder `monitoring-project`:
 
-sudo modprobe overlay
-sudo modprobe br_netfilter
+```
+monitoring-project/
+├── provider.tf
+├── namespace.tf
+├── prometheus.tf
+├── grafana.tf
+├── variables.tf
+├── outputs.tf
+```
 
-# Sysctl settings
-cat <<EOF | sudo tee /etc/sysctl.d/k8s.conf
-net.bridge.bridge-nf-call-iptables=1
-net.bridge.bridge-nf-call-ip6tables=1
-net.ipv4.ip_forward=1
-EOF
 
-sudo sysctl --system
 
-# Install containerd
-sudo apt update
-sudo apt install -y containerd
 
-sudo mkdir -p /etc/containerd
-containerd config default | sudo tee /etc/containerd/config.toml
-sudo sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+##🔹 STEP 0: PREREQUISITES
 
-sudo systemctl restart containerd
-sudo systemctl enable containerd
+Make sure your environment has:
 
-echo "Containerd Installed"
+- Terraform installed → `terraform -v` ⚡
+- kubectl installed & configured → `kubectl get nodes` ☸️
+- Helm installed → `helm version` ⛵
+- A Kubernetes cluster ready (your EC2 node as a single-node cluster is fine)
+- Enough RAM (at least 4GB) for Prometheus 📊 + Grafana 📈
 
-# Install Kubernetes tools
-sudo apt-get update -y
-sudo apt-get install -y apt-transport-https ca-certificates curl gpg
+---
 
-sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.29/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 
-echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /" | sudo tee /etc/apt/sources.list.d/kubernetes.list
 
-sudo apt-get update -y
-sudo apt-get install -y kubelet kubeadm kubectl
-sudo apt-mark hold kubelet kubeadm kubectl
 
-echo "Kubernetes Installed"
-🟢 STEP 4: Run Script
-chmod +x k8s-common.sh
-./k8s-common.sh
-🟢 STEP 5: Initialize Kubernetes
+
+## 🔹 STEP 1: LAUNCH EC2 INSTANCE
+
+AWS → EC2 → Launch
+
+- **Name:** `monitoring-server`
+- **AMI:** `Ubuntu 22.04 LTS`
+- **Instance Type:** `t3.medium` (minimum) / `t3.large` (recommended)
+- **Key Pair:** `.pem`
+- **Security Group:**
+  - `22 → SSH`
+  - `3000 → Grafana` 
+  - `9090 → Prometheus` 
+  - `6443 → Kubernetes API` 
+
+> In this project, we are not launching separate servers for the master and worker nodes. Both the control plane (master) and worker components run on the same server.
+
+
+## 🔹 STEP 2: Connect to EC2
+
+Use SSH to connect to your instance:
+
+```bash
+ssh -i your-key.pem ubuntu@<EC2-Public-IP>
+```
+
+
+
+##  🔹 STEP 3: Create Kubernetes Setup Script
+
+Create a script file for Kubernetes setup:
+
+```
+sudo nano k8s-common.sh
+```
+- IF you using
+
+For ubuntu : [click here](https://github.com/nikiimisal/Internship__Project-4__Raw-material/blob/main/k8s-common.sh)
+For Amazon : [click here](https://github.com/nikiimisal/Internship__Project-4__Raw-material/blob/main/k8s-common.sh%20%20(1))
+
+
+
+>We are using Ubuntu, so commands are Ubuntu-specific. For Amazon Linux, some commands may differ.
+>Make sure the OS supports a command before running it.
+
+
+##  🔹 STEP 4: Run Setup Script
+
+```
+sudo chmod +x k8s-common.sh
+sudo ./k8s-common.sh
+```
+
+##  🔹 STEP 5: Initialize Kubernetes
+
+```
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
+```
 
-👉 ⚠️ End ला command येईल → ignore for now
+##  🔹 STEP 6: Configure kubectl
 
-🟢 STEP 6: Configure kubectl
+```Bash
 mkdir -p $HOME/.kube
 sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown ubuntu:ubuntu $HOME/.kube/config
-🟢 STEP 7: Install Network Plugin
+```
+
+
+## 🔹 STEP 7: Install Network Plugin (Flannel)
+
+```Bash
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
-🟢 STEP 8: Allow Pods on Master
+```
+
+##  🔹 STEP 8: Allow Pods on Master
+
+```Bash
 kubectl taint nodes --all node-role.kubernetes.io/control-plane-
-🟢 STEP 9: Verify Cluster
+```
+
+##  🔹 STEP 9: Verify Cluster
+
+```
 kubectl get nodes
+```
+STATUS should be: Ready ✔
 
-👉 STATUS = Ready ✔
 
-🟢 STEP 10: Install Helm
 
-👉 Helm
+##  🔹 STEP 10: Install Helm
 
+```
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
-🟢 STEP 11: Install Terraform
+```
 
-👉 Terraform
+##  🔹 STEP 11: Install Terraform
 
+```Bash
 sudo apt install -y gnupg software-properties-common
-
 wget -O- https://apt.releases.hashicorp.com/gpg | gpg --dearmor | sudo tee /usr/share/keyrings/hashicorp.gpg
-
 echo "deb [signed-by=/usr/share/keyrings/hashicorp.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
+sudo apt update
+sudo apt install terraform -y
+```
 
-sudo apt update && sudo apt install terraform -y
-🟢 STEP 12: Create Project Folder
+##  🔹 STEP 12: Create Project Folder
+
+```
 mkdir monitoring-project
 cd monitoring-project
-🟢 STEP 13: Create Terraform Files
+```
+
+##  🔹 STEP 13: Create Terraform Files
+
+```Bash
 touch provider.tf namespace.tf prometheus.tf grafana.tf variables.tf outputs.tf
+```
+Paste your prepared Terraform + Helm code into these files.
 
-👉 (तुझं prepared code paste कर ✔)
+>To see files [click here](https://github.com/nikiimisal/Internship__Project-4__Raw-material)
 
-🟢 STEP 14: Run Terraform
+
+
+##  🔹 STEP 14: Run Terraform
+
+```Bash
 terraform init
+terraform plan   # if you wan see your plane
 terraform apply --auto-approve
-🟢 STEP 15: Verify Pods
+```
+
+- Terraform will deploy:
+
+  - Monitoring namespace
+  - Prometheus
+  - Grafana
+
+
+##   🔹 STEP 15: Verify Pods
+
+```Bash
 kubectl get pods -n monitoring
-🟢 STEP 16: Access Prometheus
+```
+
+##  🔹 STEP 16: Access Prometheus
+
+
+```Bash
 kubectl port-forward svc/prometheus-server 9090:80 -n monitoring --address 0.0.0.0
+```
 
-👉 Open:
+If you want to run it on the backend, use this command.
+```Bash
+nohup kubectl port-forward svc/prometheus-server 9090:80 -n monitoring --address 0.0.0.0 > prometheus_pf.log 2>&1 &
+```
+Open browser:
 
-http://<EC2-PUBLIC-IP>:9090
-🟢 STEP 17: Access Grafana
+```
+http://<EC2-Public-IP>:9090
+```
+
+
+
+##  🔹 STEP 17: Access Grafana
+
+```
 kubectl port-forward svc/grafana 3000:80 -n monitoring --address 0.0.0.0
+```
 
-👉 Open:
+If you want to run it on the backend, use this command.
+```Bash
+nohup kubectl port-forward svc/grafana 3000:80 -n monitoring --address 0.0.0.0 > grafana_pf.log 2>&1 &
+```
 
-http://<EC2-PUBLIC-IP>:3000
-🟢 STEP 18: Get Password
-kubectl get secret --namespace monitoring grafana \
--o jsonpath="{.data.admin-password}" | base64 --decode
-🧠 FINAL FLOW
+Open browser:
+```
+http://<EC2-Public-IP>:3000
+```
 
-👉 EC2 (Ubuntu) → containerd → kubeadm → Kubernetes → Helm → Terraform → Prometheus → Grafana
+
+##  🔹 STEP 18: Get Grafana Password
+
+```Bash
+kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode
+```
+
+Username: `admin`
+Password: output of the above command
+
+
+##  ✅ FINAL FLOW
+
+```
+EC2 → containerd → kubeadm → Kubernetes → Helm → Terraform → Prometheus → Grafana
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
