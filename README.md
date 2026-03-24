@@ -245,6 +245,17 @@ If you want to run it on the backend, use this command.
 ```Bash
 nohup kubectl port-forward svc/prometheus-server 9090:80 -n monitoring --address 0.0.0.0 > prometheus_pf.log 2>&1 &
 ```
+If you want to stop a background process:
+```Bash
+pkill -f "port-forward"          # finds and stops any running process whose full command contains "port-forward
+```
+```Bash
+ps -ef | grep kubectl       #   -> verify 
+ps aux                      #  → to list all running processes
+kill <PID>                  #   → to stop a process using its Process ID
+kill -9 <PID>               #   → to forcefully stop a process
+pkill <process_name>        #   → to stop a process by its name
+```
 Open browser:
 
 ```
@@ -262,6 +273,11 @@ kubectl port-forward svc/grafana 3000:80 -n monitoring --address 0.0.0.0
 If you want to run it on the backend, use this command.
 ```Bash
 nohup kubectl port-forward svc/grafana 3000:80 -n monitoring --address 0.0.0.0 > grafana_pf.log 2>&1 &
+```
+
+If you want to stop a background process:
+```Bash
+pkill -f "port-forward"          # finds and stops any running process whose full command contains "port-forward
 ```
 
 Open browser:
