@@ -89,6 +89,12 @@ AWS → EC2 → Launch
 
 > In this project, we are not launching separate servers for the master and worker nodes. Both the control plane (master) and worker components run on the same server.
 
+
+
+| **Instance**    | **Security Group**          |
+|--------------------------------|------------------------------------|
+| ![VS](https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-4/Screenshot%202026-03-24%20071954.png?raw=true) | ![AWS](https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-4/Screenshot%202026-03-23%20102707.png?raw=true) |
+
 ---
 
 ## 🔹 STEP 2: Connect to EC2
@@ -124,6 +130,11 @@ sudo chmod +x k8s-common.sh
 sudo ./k8s-common.sh
 ```
 
+<p align="center">
+  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-4/Screenshot%202026-03-24%20090606.png?raw=true" width="700" alt="Initialize Repository Screenshot">
+</p>
+
+
 ---
 
 ##  🔹 STEP 5: Initialize Kubernetes
@@ -131,6 +142,12 @@ sudo ./k8s-common.sh
 ```
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16
 ```
+
+<p align="center">
+  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-4/Screenshot%202026-03-24%20090637.png?raw=true" width="700" alt="Initialize Repository Screenshot">
+</p>
+
+
 
 ---
 
@@ -142,6 +159,13 @@ sudo cp /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown ubuntu:ubuntu $HOME/.kube/config
 ```
 
+
+<p align="center">
+  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-4/Screenshot%202026-03-24%20090808.png?raw=true" width="700" alt="Initialize Repository Screenshot">
+</p>
+
+
+
 ---
 
 
@@ -150,6 +174,8 @@ sudo chown ubuntu:ubuntu $HOME/.kube/config
 ```Bash
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml
 ```
+
+
 
 ---
 
@@ -176,6 +202,12 @@ STATUS should be: Ready ✔
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 ```
 
+<p align="center">
+  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-4/Screenshot%202026-03-24%20090843.png?raw=true" width="700" alt="Initialize Repository Screenshot">
+</p>
+
+
+
 ---
 
 ##  🔹 STEP 11: Install Terraform
@@ -188,6 +220,15 @@ sudo apt update
 sudo apt install terraform -y
 ```
 
+
+
+<p align="center">
+  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-4/Screenshot%202026-03-24%20091015.png?raw=true" width="700" alt="Initialize Repository Screenshot">
+</p>
+
+
+
+
 ---
 
 ##  🔹 STEP 12: Create Project Folder
@@ -196,6 +237,14 @@ sudo apt install terraform -y
 mkdir monitoring-project
 cd monitoring-project
 ```
+
+
+<p align="center">
+  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-4/Screenshot%202026-03-24%20091212.png?raw=true" width="700" alt="Initialize Repository Screenshot">
+</p>
+
+
+
 
 ---
 
@@ -232,6 +281,15 @@ terraform apply --auto-approve
 kubectl get pods -n monitoring
 ```
 
+
+<p align="center">
+  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-4/Screenshot%202026-03-24%20082842.png?raw=true" width="700" alt="Initialize Repository Screenshot">
+</p>
+
+
+
+
+
 ---
 
 ##  🔹 STEP 16: Access Prometheus
@@ -262,6 +320,13 @@ Open browser:
 http://<EC2-Public-IP>:9090
 ```
 
+
+<p align="center">
+  <img src="" width="700" alt="Initialize Repository Screenshot">
+</p>
+
+
+
 ---
 
 ##  🔹 STEP 17: Access Grafana
@@ -284,6 +349,19 @@ Open browser:
 ```
 http://<EC2-Public-IP>:3000
 ```
+
+
+| **Browser**    | ****          |
+|--------------------------------|------------------------------------|
+| ![VS]() | ![AWS]() |
+
+
+
+| **Browser**    | ****          |
+|--------------------------------|------------------------------------|
+| ![VS]() | ![AWS]() |
+
+
 
 ---
 
