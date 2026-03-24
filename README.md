@@ -61,7 +61,7 @@ monitoring-project/
 
 Make sure your environment has:
 
-- Terraform installed → `terraform -v` ⚡
+- Terraform installed → `terraform -v` 
 - kubectl installed & configured → `kubectl get nodes` 
 - Helm installed → `helm version` 
 - A Kubernetes cluster ready (your EC2 node as a single-node cluster is fine)
@@ -78,7 +78,7 @@ Make sure your environment has:
 AWS → EC2 → Launch
 
 - **Name:** `monitoring-server`
-- **AMI:** `Ubuntu 22.04 LTS`
+- **AMI:** `Ubuntu 22.04`
 - **Instance Type:** `t3.medium` (minimum) / `t3.large` (recommended)
 - **Key Pair:** `.pem`
 - **Security Group:**
@@ -277,7 +277,7 @@ http://<EC2-Public-IP>:3000
 kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-password}" | base64 --decode
 ```
 
-Username: `admin`
+Username: `admin`<br>
 Password: output of the above command
 
 ---
@@ -295,7 +295,7 @@ EC2 → containerd → kubeadm → Kubernetes → Helm → Terraform → Prometh
 ## 📝 SHORT REPORT
 
 ### Infrastructure Components Used
-- **EC2:** Ubuntu 22.04 LTS
+- **EC2:** Ubuntu 22.04 
 - **Kubernetes Cluster:** kubeadm
 - **Container Runtime:** containerd
 - **Deployment Automation:** Helm & Terraform
