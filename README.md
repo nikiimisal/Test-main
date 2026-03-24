@@ -322,7 +322,12 @@ http://<EC2-Public-IP>:9090
 
 
 <p align="center">
-  <img src="" width="700" alt="Initialize Repository Screenshot">
+  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-4/Screenshot%202026-03-24%20091418.png?raw=true" width="700" alt="Initialize Repository Screenshot">
+</p>
+
+
+<p align="center">
+  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-4/Screenshot%202026-03-24%20074539.png?raw=true" width="700" alt="Initialize Repository Screenshot">
 </p>
 
 
@@ -351,15 +356,22 @@ http://<EC2-Public-IP>:3000
 ```
 
 
-| **Browser**    | ****          |
-|--------------------------------|------------------------------------|
-| ![VS]() | ![AWS]() |
+
+<p align="center">
+  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-4/Screenshot%202026-03-24%20091443.png?raw=true" width="700" alt="Initialize Repository Screenshot">
+</p>
 
 
 
 | **Browser**    | ****          |
 |--------------------------------|------------------------------------|
-| ![VS]() | ![AWS]() |
+| ![VS](https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-4/Screenshot%202026-03-24%20080743.png?raw=true) | ![AWS](https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-4/Screenshot%202026-03-24%20080820.png?raw=true) |
+
+
+
+| **Browser**    | ****          |
+|--------------------------------|------------------------------------|
+| ![VS](https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-4/Screenshot%202026-03-24%20081659.png?raw=true) | ![AWS](https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-4/Screenshot%202026-03-24%20082540.png?raw=true) |
 
 
 
@@ -373,6 +385,13 @@ kubectl get secret --namespace monitoring grafana -o jsonpath="{.data.admin-pass
 
 Username: `admin`<br>
 Password: output of the above command
+
+
+<p align="center">
+  <img src="https://github.com/nikiimisal/Internship--Project-s/blob/main/img/proj-4/Screenshot%202026-03-24%20091545.png?raw=true" width="700" alt="Initialize Repository Screenshot">
+</p>
+
+
 
 ---
 
